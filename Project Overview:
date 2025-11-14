@@ -1,76 +1,44 @@
 Summery:
-
-To do this project, I used the Northwind database, which contains sales data for many years of the fictional enterprise "Northwind Traders,".  I extracted the data from the Kaggle site. In fact, this fictional enterprise is involved in global food import and export.  The existing database has several files in CSV format and includes elements such as customers, orders, inventory, purchases, suppliers, shippers, employees.  By using the data of this fictional enterprise, I reached achievements that can be useful for any real company to get an overview of the state of their company.  Obviously, larger or smaller companies are always involved in ordering, buying, selling, and shipping similar to this company.  All reputable companies need proper planning to calculate the following:
-
+To do this project, I used the Northwind database, which contains sales data for many years of the fictional enterprise "Northwind Traders,".  I extracted the data from the kaggle site. In fact, this fictional enterprise is involved in global food import and export.  The existing database has several files in CSV format and includes elements such as customers, orders, inventory, purchases, suppliers, shippers, employees.  By using the data of this fictional enterprise, I reached achievements that can be useful for any real company to get an overview of the state of their company.  Obviously, larger or smaller companies are always involved in ordering, buying, selling, and shipping similar to this company.  All reputable companies need proper planning to calculate the following:
 Receiving product orders, timely delivery to the customer, estimation of the amount and average sales, delay in the shipment and the percentage of shipment not shipped.
-
 Using Power BI software allows us to use data modeling and data visualization to analyze the company's situation at any moment and predict a picture of the future.
 
 Database:
-
 Database contains the entities below:
-
 There are 6 CSV files whose fields and records are as follows:
-
 Customers: Customers who buy products from Northwin:
-
 9 fields & 91 records
-
-Company name, Contact name, Contact title, City, Region, Postal code, Country, Phone, Fax.
-
+Companyname, Contactname, Contacttitle, City, Region, Postalcode, Country, Phone, Fax.
 Orders:  Sales Order transactions taking place between the customers & the company:
-
 14 fields & 830 records
-
-Order id, Customer id, Employee id, Order date, Required date, Shipped date, Ship via, Freight, Ship name, Ship city, Ship region, Ship postal code, Ship country, Shipper id
-
+Orderid, Customerid, Employeeid, Orderdate, Requireddate, Shippeddate, Shipvia, Freight, Shipname, Shipcity, Shipregion, Shippostalcode, Shipcountry, Shipperid
 Order_Details: Sales Order transactions taking place between the customers & the company
-
 5 fields & 2155 records
-
-Order id, Product id, Unit price, Quantity, Discount.
-
+Ordered, Productid, Unitprice, Quantity, Discount.
 Products: Product information
-
 10 fields & 77 records
-
-Product id, Product name, Supplier id, Category id, Quantity per unit, Unit price, Unit linstock, Unit son order, Reorder level, Discontinued.
-
+Productid, Productname, Supplierid, Categoryid, Quantityperunit, Unitprice, Unitsinstock, Unitsonorder, Reorderlevel, Discontinued.
 Shippers: The details of the shippers who ship the products from the traders to the end-customers:
-
 3 fields & 7 records
-
 Shipperid, Companyname, Phone
-
-Suppliers: Suppliers information and vendors of Northwind:
-
+Suppliers:  Suppliers information and vendors of Northwind:
 12 fields & 29 records
-
-Supplied, Company name, Contact name, Contact title, Address, City, Region, Postal code, Country, Phone, Fax, Homepage.
+Supplierid, Companyname, Contactname, Contacttitle, Address, City, Region, Postalcode, Country, Phone, Fax, Homepage.
 
 Questions & Goals:
-
-What is the percentage of sales orders that have not been shipped?
-
-How many days has the company delayed in shipping orders?
-
-What is the maximum amount of sales for different orderids?
-
-What is the average sales amount?
-
-What is the sales volume of distinct products by customers’s country?
-
-How can the quantity of sold products be checked dynamically along with the changes of other items?
-
-What is the total freight per sales order?
-
-What is the total amount of sales based on the company name?
-
-What is the total amount of discounts for each supplier?
-
-What is the amount of sales based on the country?
-
-What is the total amount of sales?
+1-Data cleaning
+2-Data modeling
+3-What is the maximum amount of sales for different orderids?
+4-What is the percentage of sales orders that have not been shipped?
+5-What is the average sales amount?
+6-How much is the total of freight? How much is the freight per order?
+7-How many days has the company delayed in shipping orders?
+8-What are the top 5 products by destination country?
+9-How can the quantity of sold products be checked dynamically along with the changes of other items?
+10-What is the total amount of sales based on the company name?
+11-What is the total amount of discounts for each supplier?
+12-How has the total freight rate changed from 1996 to 1998?
+13-What is the total freight based on the shipcountry?
 
 Steps:
 
@@ -78,49 +46,54 @@ I designed a sales analysis dashboard using the data of an fictional enterprise,
 
 Data Cleaning:
 Customer id, Shipcountry, Shipregion:  To create a relationship between the tables, I had to make the fields unique. So, in the power query section, I first duplicated the required fields and then made them unique.
-
 Orders:  In the next step, there were two orders tables that I merged.
-
 Customers:  The naming of the headers of this table was changed to "Column" in the loading process, which was modified using the CSV source file.
-
 Shippeddate:  This field contained the shipping dates of the goods, which were stored in the format of day, month, year, and hour. While the orderdate and requiredate fields were saved without recording the time. In order to unify the format of these, I used “Split”, “Remove duplicate” and “Duplicate column” tools.
-
 Finally, I saved the changes and arranged the tables ready for model design.
 
 Data Modeling:
-I designed a model in the "Model View" environment using the “Snow flake Schema model”.  In this model, if the orders table is considered as a “Fact”, the rest of the tables are located around it as a “Dimension”. 
+Power BI Data Model Analysis and Interpretation:
+The data model designed in this Power BI project follows a Star Schema structure, aimed at providing a comprehensive analysis of sales performance, customers, products, suppliers, and shipping operations within the organization.
+By integrating several key tables including Orders, Order_Details, Customers, Products, Suppliers, and Shippers the model enables a detailed examination of the relationships across various components of the sales process.
+Structure and Relationships
+In this model, the Order_Details table functions as the fact table, containing detailed transaction-level information such as unit price, quantity, and discount for each order.
+The supporting dimension tables such as Customers, Products, Suppliers, and Shippers provide descriptive attributes that allow data analysis from multiple perspectives, including customer demographics, product categories, supplier performance, and shipping logistics.
+One-to-many (1:*) relationships between these tables are properly defined, ensuring accurate data filtering, aggregation, and cross-table analysis throughout the model.
+Key Analytical Insights
+Using this model, the following analyses can be performed:
+1-Sales and Revenue Analysis:
+Calculation of total and average sales, identification of top-selling products and customers, and evaluation of sales trends over time.
+These insights help decision-makers focus on the most profitable market segments.
+2-Customer Analysis:
+Examination of customer distribution by region, total purchase volume per customer, and identification of loyal or high-value customers.
+3-Supplier Analysis:
+Evaluation of supplier performance based on product sales volume, product variety, and contribution to overall sales.
+4-Shipping and Logistics Analysis:
+Comparison of shipping companies’ performance based on the number of orders delivered, shipping times, and delay percentages.
+5-Geographical Analysis (Region & Country):
+Integration of ShipCountry and ShipRegion tables allows spatial analysis of sales performance and helps identify potential markets for expansion.
+6-Dynamic Parameterized Analysis:
+The Quantity Parameter table introduces interactive analysis, enabling users to dynamically switch between analytical metrics such as quantity, freight cost, or order volume.
+Conclusion
+The developed data model provides a cohesive, scalable, and analytically rich foundation for business intelligence reporting.  It delivers not only a holistic overview of sales and operational performance but also supports advanced multidimensional analysis empowering strategic decisions in areas such as marketing, supply chain, and logistics management.
+By incorporating additional measures such as Gross Profit, Delivery Delay Rate, and Product Market Share, the model can serve as the analytical core of an intelligent decision-support system for the organization. 
+ The way to connect the dimensions is as follows:
 
-Actually, the fact table or orders works as a query with which all the common fields of the dimensions have a single or both relationship. This type of model avoids redundancy.
-
-The way to connect the dimensions is as follows:
-
-Company name (Shippers, Customers)                                                                                                               
-
-Customer id (Orders , Customers)
-
- Phone (Customers, Supplier )                                                    
-
- Shipper id (Orders, Shippers)                                                                                                          
-
- Country (Customers, Ship country)                                                                                                      
-
- Order id (Orders, Order-details)                                                                                
-
-  Region ( Customers, Ship region)                                                                                                              
-
-  Ship country( Orders,  Ship country)                                                                                                               
-
-  City( Customers , Orders , Suppliers)                                                                         
-
-  Product id (Product, Order-details)                                                                                                                
-
-  Ship region ( Orders,  Ship region)                                                                                                      
-
-   Supplier id( Product, Supplier)                                                                             
-
-   Quantity (Order-detail , Quantity parameter)                                                                                        
-
-   Analysis:
+Company name (Shippers, Customers)                                                                                                              
+Customer id (Orders , Customers)
+ Phone (Customers, Supplier )                                                   
+ Shipper id (Orders, Shippers)                                                                                                         
+ Country (Customers, Ship country)                                                                                                     
+ Order id (Orders, Order-details)                                                                                
+  Region ( Customers, Ship region)                                                                                                              
+  Ship country( Orders, Ship country)                                                                                                               
+  City( Customers , Orders , Suppliers)                                                                        
+  Product id (Product, Order-details)                                                                                                                
+  Ship region ( Orders,  Ship region)                                                                                                     
+   Supplier id( Product, Supplier)                                                                            
+   Quantity (Order-detail , Quantity parameter)                                                                                    
+   
+Analysis:
 
 After preparing the data and data modeling, in order to reach the answers to the desired questions and goals, I have to write the required measures using DAX.
 
